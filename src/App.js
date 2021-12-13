@@ -1,10 +1,30 @@
+import { useState } from "react";
 import "./styles.css";
 
+import PlanList from "./PlanList";
+import ComparePlans from "./ComparePlans";
+
 export default function App() {
+  const [isComparing, setIsComparing] = useState(false);
+  const [plans, setPlans] = useState(undefined);
+
+  const handleComparePlans = (plansToCompare) => {
+    setPlans(plansToCompare);
+    setIsComparing(true);
+  };
+
+  const handleGoBack = () => {
+    setPlans(undefined);
+    setIsComparing(false);
+  };
+
   return (
     <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
+      {isComparing ? (
+        <ComparePlans plansToCompare={plans} goBack={handleGoBack} />
+      ) : (
+        <PlanList comparePlans={handleComparePlans} />
+      )}
     </div>
   );
 }
